@@ -1,0 +1,42 @@
+{
+  "name": "stoptask",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Ayush Poddar <ayush_poddar@live.com>",
+  "license": "MIT",
+  "dependencies": {
+    "app-root-path": "^2.2.1",
+    "bcrypt": "^3.0.6",
+    "bluebird": "^3.7.1",
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "compression": "^1.7.4",
+    "convict": "^5.2.0",
+    "cookie-parser": "^1.4.4",
+    "csv-generate": "^3.2.3",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mocha": "^6.2.2",
+    "moment": "^2.24.0",
+    "mongoose": "^5.7.6",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.4",
+    "redis": "^2.8.0",
+    "supertest": "^4.0.2",
+    "uuid": "^3.3.3"
+  },
+  "scripts": {
+    "start": "DEBUG=app:* nodemon server.js",
+    "test": "NODE_ENV=testing DEBUG=app:* mocha test/**/*.js --exit"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  }
+}

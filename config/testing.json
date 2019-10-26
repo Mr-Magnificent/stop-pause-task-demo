@@ -1,0 +1,7 @@
+{
+    "redis": {
+        "url": "redis://127.0.0.1:6379"
+    },
+    "db": "mongodb://localhost:27017/test",
+    "bcryptSalt": 10
+}
