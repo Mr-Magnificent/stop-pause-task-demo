@@ -1,19 +1,15 @@
-const Task = require('../model/Task');
+const { Task } = require('../model');
 const uuidv4 = require('uuid/v4');
-const moment = require('moment');
 const HeavyProcess = require('../lib/heavyProcess');
 const { redisSub, redisPub } = require('../lib/taskEvents');
 
-const debug = require('debug')('app:exportController');
+const debug = require('debug')('app:teamController');
 
-exports.createExport = async (req, res) => {
-    const start = moment(req.query.start, 'YYYY-MM-DD');
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
 
-    if (!start.isValid() || start.isAfter(moment())) {
-        return res.status(404).send({
-            message: 'start is not valid'
-        });
-    }
+exports.createTeam = async (req, res) => {
 
     try {
         const uuid = uuidv4();
@@ -23,11 +19,9 @@ exports.createExport = async (req, res) => {
             status: 'OK'
         });
 
-        const iterStart = start.valueOf();
-
         redisSub.subscribe(uuid);
-        // Assume that server takes 4 seconds to generate each record
-        const heavyProcess = new HeavyProcess(uuid, iterStart, moment.now(), 4 * 1000);
+        // Assume that server takes 7 seconds to generate each team
+        const heavyProcess = new HeavyProcess(uuid, 0, getRandomInt(1000), 7 * 1000);
         heavyProcess.startDataGeneration();
 
         return res.status(202).send({
@@ -51,14 +45,14 @@ exports.pauseExport = async (req, res) => {
                 message: 'no such task'
             });
         }
-        
+
         if (task.user_id.toString() !== req.user.id) {
             return res.status(403).send({
                 message: 'Someone else initiated the task'
             });
         }
 
-        if (task.status === 'PAUSE' ) {
+        if (task.status === 'PAUSE') {
             return res.status(400).send({
                 message: 'Task already paused'
             });
@@ -80,7 +74,7 @@ exports.pauseExport = async (req, res) => {
         });
 
         return res.status(202).send({
-            message: 'Export paused'
+            message: 'Team creation paused'
         });
     } catch (err) {
         debug(err);
@@ -105,13 +99,13 @@ exports.stopExport = async (req, res) => {
                 message: 'Someone else initiated the task'
             });
         }
-        
+
         if (task.status === 'STOP') {
             return res.status(400).send({
                 message: 'Task already stopped'
             });
         }
-        
+
         redisPub.publish(req.query.uuid, 'STOP');
 
         await Task.findOneAndUpdate({
@@ -140,14 +134,14 @@ exports.restart = async (req, res) => {
                 message: 'no such task'
             });
         }
-        
+
         if (task.user_id.toString() !== req.user.id) {
             return res.status(403).send({
                 message: 'Someone else initiated the task'
             });
         }
 
-        if (task.status === 'start' ) {
+        if (task.status === 'start') {
             return res.status(400).send({
                 message: 'Task already running'
             });

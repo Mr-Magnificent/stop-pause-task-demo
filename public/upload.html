@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- bootstrap css -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>THIS!!!</title>
+</head>
+
+<body>
+    <div class="container">
+        <input type="file" id="fileInp" />
+        <br /><br />
+        <input type="button" id="submit" onclick="createIteratorAndSend()" class="btn btn-primary" value="submit" />
+        <input type="button" id="start" hidden onclick="start()" class="btn btn-success" value="start" />
+        <input type="button" id="pause" hidden onclick="pause()" class="btn btn-warning" value="pause" />
+        <input type="button" id="stop" hidden onclick="stop()" class="btn btn-danger" value="stop" />
+        </form>
+        <br />
+        <hr />
+        <h3>Open the below link after upload to get the file</h3>
+        <div>
+            <a href="#" onclick="redirectTohref()" id="link">Link</a>
+        </div>
+    </div>
+</body>
+<!-- Bootstrap js cdn -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<script src="./upload.js"></script>
+</html>

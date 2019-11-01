@@ -9,6 +9,7 @@
     "bcrypt": "^3.0.6",
     "bluebird": "^3.7.1",
     "body-parser": "^1.19.0",
+    "busboy": "^0.3.1",
     "chai": "^4.2.0",
     "compression": "^1.7.4",
     "convict": "^5.2.0",
@@ -17,11 +18,13 @@
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "gridfs-stream": "^1.1.1",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^6.2.2",
     "moment": "^2.24.0",
     "mongoose": "^5.7.6",
     "morgan": "^1.9.1",
+    "multistream": "^4.0.0",
     "nodemon": "^1.19.4",
     "redis": "^2.8.0",
     "supertest": "^4.0.2",
@@ -29,7 +32,7 @@
   },
   "scripts": {
     "start": "DEBUG=app:* nodemon server.js",
-    "test": "NODE_ENV=testing DEBUG=app:* mocha test/**/*.js --exit"
+    "test": "NODE_ENV=testing DEBUG=test:* mocha test/**/*.js --exit"
   },
   "devDependencies": {
     "eslint": "^6.5.1",

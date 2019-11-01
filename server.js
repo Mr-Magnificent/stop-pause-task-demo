@@ -5,7 +5,9 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const debug = require('debug')('app:');
-const router = require('./app/routes');
+require('./app/lib/taskEvents');
+const apiRouter = require('./app/routes/api.routes');
+const webRouter = require('./app/routes/web.routes');
 const config = require('./config');
 
 app.use(compression());
@@ -14,7 +16,14 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(cookieParser());
 
-app.use('/api', router);
+app.use(express.static('public'));
+
+app.use('/', webRouter);
+app.use('/api', apiRouter);
+
+// app.get('/*', (req, res) => {
+    
+// });
 
 const PORT = config.port || 3000;
 

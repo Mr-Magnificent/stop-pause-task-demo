@@ -1,56 +1,19 @@
 /* eslint-disable no-undef */
-const debug = require('debug')('test:login');
+// const debug = require('debug')('test:login');
+const { populateUser } = require('../seed/seed');
 
 describe('Login', function () {
-    describe('POST /api/register', function () {
-        before(async function ClearDB() {
-            await User.deleteMany({});
-        });
-
-        it('creates a user', function (done) {
-            request.post('/api/register')
-                .send({
-                    username: 'ayushpoddar',
-                    password: 'ap123'
-                })
-                .expect(200)
-                .end(function hello() {
-                    User.findOne({
-                        username: 'ayushpoddar'
-                    }, function (err, data) {
-                        if (err)
-                            done(err);
-                        expect(data.username).to.equal('ayushpoddar');
-                        done();
-                    });
-                });
-        });
-
-        it('fails to create another user with same username', function (done) {
-            request.post('/api/register')
-                .send({
-                    username: 'ayushpoddar',
-                    password: 'newpwd'
-                })
-                .expect(response => {
-                    expect(response.status).to.equal(400);
-                    expect(response.body).to.deep.equal({
-                        message: 'User already registered'
-                    });
-                })
-                .end(done);
-        });
-    });
-
     describe('POST /api/login', function () {
+        before(populateUser);
         after(async () => {
             await User.deleteMany({});
         });
 
+
         it('should not login password mismatch', function (done) {
             request.post('/api/login')
                 .send({
-                    username: 'ayushpoddar',
+                    username: 'userOne',
                     password: 'pwd'
                 })
                 .expect(response => {
@@ -80,8 +43,8 @@ describe('Login', function () {
         it('should login', function (done) {
             request.post('/api/login')
                 .send({
-                    username: 'ayushpoddar',
-                    password: 'ap123'
+                    username: 'userOne',
+                    password: 'password1'
                 })
                 .expect(response => {
                     expect(response.status).to.equal(200);
