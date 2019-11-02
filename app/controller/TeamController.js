@@ -141,7 +141,7 @@ exports.restart = async (req, res) => {
             });
         }
 
-        if (task.status === 'start') {
+        if (task.status === 'OK') {
             return res.status(400).send({
                 message: 'Task already running'
             });

@@ -4,6 +4,9 @@ const { populateUser } = require('../seed/seed');
 
 describe('Login', function () {
     describe('POST /api/login', function () {
+        before(async () => {
+            await User.deleteMany({});
+        });
         before(populateUser);
         after(async () => {
             await User.deleteMany({});

@@ -9,6 +9,7 @@ const debug = require('debug')('app:exportController');
 exports.createExport = async (req, res) => {
     const start = moment(req.query.start, 'YYYY-MM-DD');
 
+    
     if (!start.isValid() || start.isAfter(moment())) {
         return res.status(404).send({
             message: 'start is not valid'
@@ -147,7 +148,7 @@ exports.restart = async (req, res) => {
             });
         }
 
-        if (task.status === 'start' ) {
+        if (task.status === 'OK' ) {
             return res.status(400).send({
                 message: 'Task already running'
             });

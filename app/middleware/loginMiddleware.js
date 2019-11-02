@@ -13,6 +13,9 @@ module.exports = async (req, res, next) => {
         debug.extend('auth')(decoded);
         const user = await User.findById(decoded);
         debug(user);
+        if (!user) {
+            return res.status(404).send('No such user');
+        }
         // eslint-disable-next-line require-atomic-updates
         req.user = user;
 

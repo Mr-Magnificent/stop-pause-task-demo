@@ -5,7 +5,11 @@ const debug = require('debug')('app:model');
 GridFS.mongo = mongoose.mongo;
 
 mongoose.connect(config.db,
-    { useNewUrlParser: true, useUnifiedTopology: true },
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false
+    },
     (err) => {
         if (err) {
             debug.extend('error')(err);

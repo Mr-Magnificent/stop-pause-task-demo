@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const config = require('../../config');
-const debug = require('debug')('test:seed');
+// const debug = require('debug')('test:seed');
+const { User } = require('../../app/model');
 
 const user = {
     username: 'userOne',
