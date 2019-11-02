@@ -3,5 +3,5 @@
         "url": "redis://redis-16261.c84.us-east-1-2.ec2.cloud.redislabs.com:16261"
     },
     "db": "mongodb://localhost:27017/db",
-    "saltRounds": 10
+    "bcryptSalt": 10
 }

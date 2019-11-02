@@ -1,7 +1,7 @@
 const fakeCSVGenerate = require('csv-generate');
 const fs = require('fs');
 const appRoot = require('app-root-path');
-const { redisSub } = require('./taskEvents');
+const { redisSub } = require('./redisTaskEvents');
 
 const debug = require('debug')('app:heavyProc');
 
@@ -11,6 +11,16 @@ function* makeRangeIterator(start, end) {
     }
 }
 
+
+/**
+ * Mimics the generation of resource intensive csv record
+ * @param {uuid}: string - uniquely identify each task,
+ *  later used by redis to generate events to pause, start, stop a task
+ * @param {start}: Number - epoch time in ms denoting the start of export
+ * @param {end}: Number - epoch time in ms denoting the end of export
+ * @param {intrDur}: interval duration that thought that each iteration
+ *  of loop(start ... end) takes
+ */
 class MimicHeavyProcess {
     constructor(uuid, start, end, intrDur) {
         this.uuid = uuid;

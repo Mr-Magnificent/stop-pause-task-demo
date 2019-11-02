@@ -2,7 +2,7 @@ const Task = require('../model/Task');
 const uuidv4 = require('uuid/v4');
 const moment = require('moment');
 const HeavyProcess = require('../lib/heavyProcess');
-const { redisSub, redisPub } = require('../lib/taskEvents');
+const { redisSub, redisPub } = require('../lib/redisTaskEvents');
 
 const debug = require('debug')('app:exportController');
 

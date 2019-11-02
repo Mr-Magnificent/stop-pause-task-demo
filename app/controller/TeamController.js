@@ -1,7 +1,7 @@
 const { Task } = require('../model');
 const uuidv4 = require('uuid/v4');
 const HeavyProcess = require('../lib/heavyProcess');
-const { redisSub, redisPub } = require('../lib/taskEvents');
+const { redisSub, redisPub } = require('../lib/redisTaskEvents');
 
 const debug = require('debug')('app:teamController');
 

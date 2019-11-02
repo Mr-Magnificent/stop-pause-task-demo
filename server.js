@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const debug = require('debug')('app:');
-require('./app/lib/taskEvents');
+require('./app/lib/redisTaskEvents');
 const apiRouter = require('./app/routes/api.routes');
 const webRouter = require('./app/routes/web.routes');
 const config = require('./config');

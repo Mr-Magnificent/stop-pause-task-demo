@@ -1,0 +1,29 @@
+redis:
+  image: redis
+  container_name: cache
+  expose:
+    - 6379
+
+mongo:
+  image: mongo
+  container_name: mongo
+  volumes:
+    - ./database:/data/db
+  expose:
+    - 27017
+
+app:
+  build: ./
+  volumes: 
+    - ./:/usr/src/app
+  links:
+    - redis
+    - mongo
+  ports:
+    - 3000:3000
+  environment:
+    - NODE_ENV=${NODE_ENV}
+    - REDIS_PASSWORD=${REDIS_PASSWORD}
+    - SECRET=${SECRET}
+    - REDIS_URL=redis://cache
+    - DEBUG=app:*
