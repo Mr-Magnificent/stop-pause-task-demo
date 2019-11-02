@@ -27,3 +27,4 @@ app:
     - SECRET=${SECRET}
     - REDIS_URL=redis://cache
     - DEBUG=app:*
+    - DB_URL=mongodb://mongo
