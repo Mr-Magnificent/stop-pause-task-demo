@@ -21,9 +21,6 @@ app.use(express.static('public'));
 app.use('/', webRouter);
 app.use('/api', apiRouter);
 
-// app.get('/*', (req, res) => {
-    
-// });
 
 const PORT = config.port || 3000;
 

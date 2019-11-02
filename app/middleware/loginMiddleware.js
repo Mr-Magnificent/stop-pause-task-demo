@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.SECRET);
         debug.extend('auth')(decoded);
         const user = await User.findById(decoded);
-        debug(user);
+
         if (!user) {
             return res.status(404).send('No such user');
         }

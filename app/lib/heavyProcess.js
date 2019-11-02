@@ -12,16 +12,15 @@ function* makeRangeIterator(start, end) {
 }
 
 
-/**
- * Mimics the generation of resource intensive csv record
- * @param {uuid}: string - uniquely identify each task,
- *  later used by redis to generate events to pause, start, stop a task
- * @param {start}: Number - epoch time in ms denoting the start of export
- * @param {end}: Number - epoch time in ms denoting the end of export
- * @param {intrDur}: interval duration that thought that each iteration
- *  of loop(start ... end) takes
- */
 class MimicHeavyProcess {
+    /**
+     * Mimics the generation of resource intensive csv record
+     * @param {String} uuid Random uuid which will identify this task in future
+     * @param {Number} start epoch time in ms denoting start of export
+     * @param {Number} end epoch time in ms denoting the end of export
+     * @param {Number} intrDur interval duration between each value of start
+     * and end, effects how fast each record is generated within stored file
+     */
     constructor(uuid, start, end, intrDur) {
         this.uuid = uuid;
         start = parseInt(start);
@@ -42,9 +41,17 @@ class MimicHeavyProcess {
         redisSub.on('message', this.redisSubscribeCB);
     }
 
+    /**
+     * 
+     * @param {String} channel each generation task is identified by uuid
+     * on which it is also listening for events for pause, stop, resume
+     * @param {['OK', 'PAUSE', 'STOP']} status each generation task listens
+     * for the resume (OK), pause (PAUSE), terminate (STOP) events created 
+     * by user
+     */
     redisSubscribeCB(channel, status) {
-        debug.extend('redis')(channel, status);
-        debug.extend('redis')(this.uuid);
+        debug.extend('redis:channel')(channel, status);
+        debug.extend('uuid')(this.uuid);
         if (channel !== this.uuid) {
             return;
         }
@@ -58,6 +65,7 @@ class MimicHeavyProcess {
             );
         } else if (status === 'STOP') {
             clearInterval(this.interval);
+            debug.extend('path')(this.path);
             fs.unlink(this.path, (err) => {
                 debug(err);
             });
@@ -66,14 +74,20 @@ class MimicHeavyProcess {
         }
     }
 
+    /**
+     * Starts the writing of data within the file stored in appRoot/files
+     */
     startDataGeneration() {
-        // debug(typeof this.intrDur);
+
         this.interval = setInterval(
             this.generateFakeCSV,
             this.intrDur
         );
     }
 
+    /**
+     * Generated a fake CSV record for each value between start, end
+     */
     generateFakeCSV() {
         let batches = this.it.next();
         debug(batches);
@@ -83,6 +97,8 @@ class MimicHeavyProcess {
         })
             .on('data', (chunk) => {
                 this.stream.write(`${chunk}\n`);
+
+                // All data generated and written
                 if (batches.done) {
                     redisSub.unsubscribe(this.uuid);
                     clearInterval(this.interval);

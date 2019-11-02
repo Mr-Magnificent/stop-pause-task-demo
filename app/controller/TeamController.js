@@ -5,6 +5,10 @@ const { redisSub, redisPub } = require('../lib/redisTaskEvents');
 
 const debug = require('debug')('app:teamController');
 
+/**
+ * Generate random number between [0, max)
+ * @param {Number} max generate random number from [0, max)
+ */
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
