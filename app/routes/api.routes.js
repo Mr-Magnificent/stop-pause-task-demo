@@ -7,17 +7,24 @@ const TeamController = require('../controller/TeamController');
 
 const authenticationMiddleware = require('../middleware/loginMiddleware');
 
-router.post('/register', LoginController.register);
-router.post('/login', LoginController.login);
+const validateBody = require('../middleware/validateBody');
+const validateQuery = require('../middleware/validateParams');
+const validateSchemas = require('../validation/validationSchema');
+
+router.post('/register', validateBody(validateSchemas.register), LoginController.register);
+router.post('/login', validateBody(validateSchemas.login), LoginController.login);
 
 router.use(authenticationMiddleware);
 
-router.get('/create-export', ExportController.createExport);
+router.get('/create-export', validateQuery(validateSchemas.createExport), ExportController.createExport);
+router.get('/create-team', TeamController.createTeam);
+
+router.use(validateQuery(validateSchemas.uuid));
+
 router.get('/restart-export', ExportController.restart);
 router.get('/pause-export', ExportController.pauseExport);
 router.get('/stop-export', ExportController.stopExport);
 
-router.get('/create-team', TeamController.createTeam);
 router.get('/restart-team', TeamController.restart);
 router.get('/pause-team', TeamController.pauseExport);
 router.get('/stop-team', TeamController.stopExport);

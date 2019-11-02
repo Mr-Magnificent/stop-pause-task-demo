@@ -5,6 +5,12 @@ const { redisSub } = require('./redisTaskEvents');
 
 const debug = require('debug')('app:heavyProc');
 
+/**
+ * Generator function to loop over start, end
+ * @param {number} start generator start
+ * @param {number} end generator end
+ * @returns {number} current iteration count
+ */
 function* makeRangeIterator(start, end) {
     for (let i = start; i < end; i++) {
         yield i;
@@ -15,10 +21,10 @@ function* makeRangeIterator(start, end) {
 class MimicHeavyProcess {
     /**
      * Mimics the generation of resource intensive csv record
-     * @param {String} uuid Random uuid which will identify this task in future
-     * @param {Number} start epoch time in ms denoting start of export
-     * @param {Number} end epoch time in ms denoting the end of export
-     * @param {Number} intrDur interval duration between each value of start
+     * @param {string} uuid Random uuid which will identify this task in future
+     * @param {number|string} start epoch time in ms denoting start of export
+     * @param {number|string} end epoch time in ms denoting the end of export
+     * @param {number} intrDur interval duration between each value of start
      * and end, effects how fast each record is generated within stored file
      */
     constructor(uuid, start, end, intrDur) {
