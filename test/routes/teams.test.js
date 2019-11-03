@@ -4,17 +4,14 @@ const request = supertest(app);
 const expect = require('chai').expect;
 const { populateUser, token } = require('../seed/seed');
 
-describe('Export', function () {
+describe('Team', function () {
     before(populateUser);
     let uuid;
 
-    describe('GET /api/create-export', function () {
-        it('should NOT create a task since token missing', (done) => {
+    describe('GET /api/create-team', function () {
+        it('should NOT create team since token missing', (done) => {
 
-            request.get('/api/create-export')
-                .query({
-                    start: '2017-04-15'
-                })
+            request.get('/api/create-team')
                 .send()
                 .expect(response => {
                     expect(response.status).to.equal(401);
@@ -26,47 +23,10 @@ describe('Export', function () {
         });
     });
 
-    describe('GET /api/create-export', function () {
-        it('should NOT create a task because incorrect date format',
-            (done) => {
-
-                request.get('/api/create-export')
-                    .query({
-                        start: '12-04-2009'
-                    })
-                    .set('Cookie', [`token=${token()}`])
-                    .send()
-                    .expect(response => {
-                        expect(response.status).to.equal(422);
-                    })
-                    .end(done);
-            });
-    });
-
-    describe('GET /api/create-export', function () {
-        it('should NOT create a task because start date after current date',
-            (done) => {
-
-                request.get('/api/create-export')
-                    .query({
-                        start: '2999-12-04'
-                    })
-                    .set('Cookie', [`token=${token()}`])
-                    .send()
-                    .expect(response => {
-                        expect(response.status).to.equal(400);
-                    })
-                    .end(done);
-            });
-    });
-
-    describe('GET /api/create-export', function () {
+    describe('GET /api/create-team', function () {
         it('should create a task', (done) => {
 
-            request.get('/api/create-export')
-                .query({
-                    start: '2017-04-15'
-                })
+            request.get('/api/create-team')
                 .set('Cookie', [`token=${token()}`])
                 .send()
                 .expect(response => {
@@ -80,10 +40,10 @@ describe('Export', function () {
         });
     });
 
-    describe('GET /api/pause-export', function () {
-        it('should pause the task', (done) => {
+    describe('GET /api/pause-team', function () {
+        it('should pause the team creation', (done) => {
 
-            request.get('/api/pause-export')
+            request.get('/api/pause-team')
                 .query({
                     uuid: uuid
                 })
@@ -92,17 +52,17 @@ describe('Export', function () {
                 .expect(response => {
                     expect(response.status).to.equal(202);
                     expect(response.body).to.deep.include({
-                        message: 'Export paused'
+                        message: 'Team creation paused'
                     });
                 })
                 .end(done);
         });
     });
 
-    describe('GET /api/restart-export', function () {
+    describe('GET /api/restart-team', function () {
         it('should restart the task', (done) => {
 
-            request.get('/api/restart-export')
+            request.get('/api/restart-team')
                 .query({
                     uuid: uuid
                 })
@@ -111,17 +71,17 @@ describe('Export', function () {
                 .expect(response => {
                     expect(response.status).to.equal(202);
                     expect(response.body).to.deep.include({
-                        message: 'Export restarted'
+                        message: 'Team creation restarted'
                     });
                 })
                 .end(done);
         });
     });   
 
-    describe('GET /api/stop-export', function () {
+    describe('GET /api/stop-team', function () {
         it('should stop the task', (done) => {
 
-            request.get('/api/stop-export')
+            request.get('/api/stop-team')
                 .query({
                     uuid: uuid
                 })

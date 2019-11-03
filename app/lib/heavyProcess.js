@@ -35,11 +35,19 @@ class MimicHeavyProcess {
         this.it = makeRangeIterator(start, end);
         this.intrDur = intrDur;
 
+        /**
+         * @var {string} path The path within the user application where the
+         * file generated is stored. Files are stored with their uuid as name
+         */
         this.path = `${appRoot}/files/${uuid}`;
         this.stream = fs.createWriteStream(this.path, {
             flags: 'w'
         });
 
+        /**
+         * @type {function} interval holds the setInterval which writes the
+         * data within the files. initialized  by calling startDataGeneration
+         */
         this.interval  = undefined;
         this.startDataGeneration = this.startDataGeneration.bind(this);
         this.redisSubscribeCB = this.redisSubscribeCB.bind(this);

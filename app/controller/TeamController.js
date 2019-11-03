@@ -166,7 +166,7 @@ exports.restart = async (req, res) => {
         });
 
         return res.status(202).send({
-            message: 'Export started'
+            message: 'Team creation restarted'
         });
     } catch (err) {
         debug(err);

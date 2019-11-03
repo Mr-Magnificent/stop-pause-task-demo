@@ -11,7 +11,7 @@ exports.createExport = async (req, res) => {
 
 
     if (!start.isValid() || start.isAfter(moment())) {
-        return res.status(404).send({
+        return res.status(400).send({
             message: 'start is not valid'
         });
     }
@@ -169,7 +169,7 @@ exports.restart = async (req, res) => {
         });
 
         return res.status(202).send({
-            message: 'Export started'
+            message: 'Export restarted'
         });
     } catch (err) {
         debug(err);

@@ -14,7 +14,7 @@ const schemas = {
             .note('start should be in YYYY-MM-DD'),
     }),
     uuid: Joi.object({
-        uuid: Joi.string().uuid({version: 'uuidv4'}).required()
+        uuid: Joi.string().uuid({ version: 'uuidv4' }).required()
     })
 };
 

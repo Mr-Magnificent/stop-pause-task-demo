@@ -25,7 +25,7 @@ app.use('/api', apiRouter);
 const PORT = config.port || 3000;
 
 app.listen(PORT, () => {
-    debug(`Server listening on PORT ${config.port}`);
+    debug(`Server listening on PORT ${PORT}`);
 });
 
 module.exports = app;
