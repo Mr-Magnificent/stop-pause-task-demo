@@ -20,6 +20,7 @@ function start() {
 async function stop() {
     paused = 1;
     document.getElementById('submit').hidden = false;
+    document.getElementById('progress').hidden = true;
     document.getElementById('start').hidden = true;
     document.getElementById('pause').hidden = true;
     document.getElementById('stop').hidden = true;
@@ -48,6 +49,7 @@ function generateRandomFileName(length) {
 
 async function createIteratorAndSend() {
     document.getElementById('submit').hidden = true;
+    document.getElementById('progress').hidden = false;
     document.getElementById('pause').hidden = false;
     document.getElementById('stop').hidden = false;
     it = readFile();
@@ -63,16 +65,19 @@ function redirectTohref() {
 // read uploaded file in chunks and reset buttons on finish
 function* readFile() {
     const fileInp = document.getElementById('fileInp');
+    const progressBar = document.getElementById('progress');
     const uploadFile = fileInp.files[0];
     const totalParts = Math.ceil(uploadFile.size / (10 * 1024 * 1024));
 
     let partSize = 10 * 1024 * 1024; // 10 MB
     for (let i = 1; i <= totalParts + 1; i++) {
         const blobPart = uploadFile.slice((i - 1) * partSize, i * partSize);
+        progressBar.value = Math.floor(i / totalParts * 100);
         yield blobPart;
     }
     
     document.getElementById('submit').hidden = false;
+    document.getElementById('progress').hidden = true;
     document.getElementById('start').hidden = true;
     document.getElementById('pause').hidden = true;
     document.getElementById('stop').hidden = true;
