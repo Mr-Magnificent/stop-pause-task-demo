@@ -27,7 +27,7 @@
     "morgan": "^1.9.1",
     "multistream": "^4.0.0",
     "nodemon": "^1.19.4",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "supertest": "^4.0.2",
     "uuid": "^3.3.3"
   },
